@@ -1,7 +1,6 @@
 import Foundation
 import Kitura
 import KituraNet
-import SwiftyJSON
 
 import SwiftKuery
 
