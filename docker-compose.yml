@@ -1,0 +1,24 @@
+version: '2'
+services:
+  mysql-db:
+    image: mysql
+    container_name: mysql-db
+    volumes:
+      - ./db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: myRoot
+      MYSQL_DATABASE: Example
+      MYSQL_USER: example
+      MYSQL_PASSWORD: example
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+  swift:
+    build: Swift
+    container_name: swift-example
+    ports:
+      - "80:8080"
+    volumes:
+      - ./Swift/Sample:/sample
+    working_dir: "/sample"
+    command: bash -c "swift build && while true; do ./.build/x86_64-unknown-linux/debug/Sample; done;"
+    links:
+      - mysql-db:mysql-db
